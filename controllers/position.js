@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client'
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient()
 // prisma creates function
 
 
-const CreatePosition = async (req, res, next) => {
+const createPosition = async (req, res, next) => {
 
     try {
 
@@ -17,7 +17,11 @@ const CreatePosition = async (req, res, next) => {
             newPosition
         })
     } catch (error) {
-
+        res.status(400).json(
+            {
+                message: error.message
+            }
+        )
     }
 }
 const updatePosition = async (req, res, next) => {
@@ -35,7 +39,10 @@ const updatePosition = async (req, res, next) => {
             update
         })
     } catch (error) {
-
+        console.log(error);
+        res.status(400).json({
+            message:error.message
+        })
     }
 }
 
@@ -52,7 +59,10 @@ const deletePosition = async (req, res, next) => {
             deleted
         })
     } catch (error) {
-
+        console.log(error);
+        res.status(400).json({
+            message:error.message
+        })
     }
 }
 const findPosition = async (req, res, next) => {
@@ -63,58 +73,43 @@ const findPosition = async (req, res, next) => {
                 id
             },
         });
-          res.status(201).json({
+        res.status(201).json({
             message: 'Position Found',
-            findMany
-          })
-    } catch (error) {
-
-    }
-
-}
-
-const getSinglePositions = async (req, res, next) => {
-try {
-    const id = req.params.id
-    const getSinglePositions = await prisma.positions.findUnique({
-        where: {
-            id
-        },
-    })
-      res.status(201).json({
-        message: 'SinglePosition Got',
-        getSinglePosition
-      })
-} catch (error) {
-
-}
-
-}
-const createVoter = async (req, res, next) => {
-    try {
-        const voter = await prisma.voters.create({
-            data
-            })
-    
-          res.status(201).json({
-            message: 'voter saved',
-            voter
-          })
-    } catch (error) {
-    console.log(error);
-    }
- }
-
- const getVoterById = async (req, res, next) => {
-    const studentId = req.params.studentId
-    try {
-        const voter = await prisma.position.findUnique({
-            where: {
-                studentId
-            }
+            find
         })
-        res.status(200).json({ voter })
     } catch (error) {
-        
+        console.log(error);
+        res.status(400).json({
+            message:error.message
+        })
     }
+
+}
+
+const getAllPositions = async (req, res, next) => {
+    try {
+        const getAllPositions = await prisma.position.findUnique({
+
+        })
+        res.status(201).json({
+            message: 'AllPosition Got',
+            getAllPosition
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            message:error.message
+        })
+    }
+
+}
+
+
+module.exports = {
+    createPosition,
+    updatePosition,
+    deletePosition,
+    findPosition,
+    getAllPositions,
+
 }

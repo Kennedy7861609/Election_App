@@ -22,7 +22,7 @@ model voters {
   voting   voting[]
 }
 
-model positions {
+model position {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   positionName String
   description  String?
@@ -38,8 +38,8 @@ model candidates {
   candidateName String
   telephone     String?
   profile       String?
-  positions     positions? @relation(fields: [positionsId], references: [id])
-  positionsId   String?    @db.ObjectId
+  position     position? @relation(fields: [positionId], references: [id])
+  positionId   String?    @db.ObjectId
   del_flag      Boolean    @default(false)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -48,8 +48,8 @@ model candidates {
 
 model voting {
 id              String     @id @default(auto()) @map("_id") @db.ObjectId
-positions       positions? @relation(fields: [positionsId], references: [id])
-positionsId     String?    @db.ObjectId
+position        position? @relation(fields: [positionId], references: [id])
+positionId     String?    @db.ObjectId
 candidates      candidates? @relation(fields: [candidatesId], references: [id])
 candidatesId    String?    @db.ObjectId
 voters          voters?    @relation(fields: [votersId], references: [studentId])
