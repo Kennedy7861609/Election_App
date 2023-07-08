@@ -103,13 +103,12 @@ const getAllPositions = async (req, res, next) => {
     }
 
 }
-
-
 module.exports = {
     createPosition,
     updatePosition,
     deletePosition,
-    findPosition,
     getAllPositions,
+    findPosition,
 
-}
+};
+
